@@ -17,4 +17,6 @@ services:
     depends_on:
       - softhsm
     environment:
+      - SOFTHSM2_SERVER_IP=softhsm-container
+      - SOFTHSM2_SERVER_PORT=5657
       - SOFTHSM2_TOKEN_PIN=1234

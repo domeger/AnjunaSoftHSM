@@ -1,10 +1,13 @@
-FROM alpine:latest
+FROM alpine:3.8
 
-RUN apk add --no-cache openssl
+RUN apk --update add \
+    openssl \
+    opensc
 
-ENV SOFTHSM2_CONF=/etc/softhsm2.conf
-ENV SOFTHSM2_SERVER_IP="softhsm-container"
-ENV SOFTHSM2_SERVER_PORT="5657"
+ENV SOFTHSM2_CONF=/etc/softhsm2.conf \
+    SOFTHSM2_SERVER_IP="softhsm-container" \
+    SOFTHSM2_SERVER_PORT="5657" \
+    SOFTHSM2_TOKEN_PIN="1234"
 
 RUN echo "directories.tokendir = /var/lib/softhsm/tokens" > $SOFTHSM2_CONF
 RUN echo "objectstore.backend = pkcs11" >> $SOFTHSM2_CONF
