@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  softhsm:
+    build:
+      context: .
+      dockerfile: softhsm/Dockerfile
+    container_name: softhsm-container
+    ports:
+      - "5657:5657"
+
+  pki-keygen:
+    build:
+      context: .
+      dockerfile: pki-keygen/Dockerfile
+    container_name: pki-keygen-container
+    depends_on:
+      - softhsm
+    environment:
+      - SOFTHSM2_TOKEN_PIN=1234
